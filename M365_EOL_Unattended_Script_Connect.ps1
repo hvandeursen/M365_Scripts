@@ -2,6 +2,9 @@
 # unattended scripting naar Exchange online
 
 # Region Create Certificate
+# Create certificates only once.
+
+
 $newCert = @{
     DnsName = 'baudevoort-consultancy.nl'
     CertStoreLocation = 'Cert:\CurrentUser\My'
@@ -21,6 +24,9 @@ $myCert | Export-PfxCertificate @exportCert
 # Export certificate to .cer file
 $myCert | Export-Certificate -FilePath ExoCert.cer
 
+
+
+
 #region USe Certificate
 $connectEXO = @{
     CertificateFilePath = 'C:\temp\ExoCert.pfx'
@@ -30,6 +36,9 @@ $connectEXO = @{
 }
 
 Connect-ExchangeOnline @connectEXO
+
+Connect-AzAccount @connectEXO
+
 
 #Test
 

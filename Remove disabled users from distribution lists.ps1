@@ -1,31 +1,15 @@
 ﻿Clear-Host
-<#
-$m = "ExchangeOnlineManagement"
-
-# If module is imported say that and do nothing
-    if (Get-Module | Where-Object {$_.Name -eq $m}) {
-        write-host "Module $m is already imported."
-    }
-    else {
-        Import-Module ExchangeOnlineManagement
-    }
 
 
-Connect-ExchangeOnline
+$connectEXO = @{
+    CertificateFilePath = 'C:\temp\ExoCert.pfx'
+    CertificatePassword = $(ConvertTo-SecureString -String '!nBR@ndev00rt' -AsPlainText -Force)
+    AppID = '394eb93e-137f-4323-b4f8-2c564fceb1d1'
+    Organization = 'baudevoortcompany.onmicrosoft.com'
+}
+Connect-ExchangeOnline @connectEXO
 
-$m = "AzureAD"
-
-# If module is imported say that and do nothing
-    if (Get-Module | Where-Object {$_.Name -eq $m}) {
-        write-host "Module $m is already imported."
-    }
-    else {
-        Import-Module AzureAD
-    }
-
-Connect-AzureAD
-
-#>
+Connect-AzAccount @connectEXO
 
 $DistributionGroups = get-DistributionGroup
 Remove-Item -Path "C:\temp\*.*" 
