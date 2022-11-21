@@ -30,9 +30,18 @@ Import-Module -Name ExchangeOnlineManagement
 # Connections
 # =========================================================================================================================
 
+$connectEXO = @{
+    CertificateFilePath = 'C:\temp\ExoCert.pfx'
+    CertificatePassword = $(ConvertTo-SecureString -String '!nBR@ndev00rt' -AsPlainText -Force)
+    AppID = '394eb93e-137f-4323-b4f8-2c564fceb1d1'
+    Organization = 'baudevoortcompany.onmicrosoft.com'
+}
+Connect-ExchangeOnline @connectEXO
+
+
 Connect-AzureAD
 Connect-MsolService
-Connect-ExchangeOnline
+
 
 # =========================================================================================================================
 # Init
@@ -66,7 +75,9 @@ Function GetDistributionGroupMembers {
     Write-host `n
     Write-host "Group = " $group
     Write-host "Check user = "$CheckUser
-    Write-host "-------------------------------"    Write-host `n    
+    Write-host "-------------------------------"
+    Write-host `n
+    
     foreach ($member in $members) 
         {
          Write-host "Member DisplayName: "$Member.DisplayName
@@ -89,7 +100,9 @@ Function GetOffice365GroupMembers {
     Write-host `n
     Write-host "Group = " $group
     Write-host "Check user = "$CheckUser
-    Write-host "-------------------------------"    Write-host `n    #>
+    Write-host "-------------------------------"
+    Write-host `n
+    #>
     $members = Get-UnifiedGroupLinks -Identity $group.Identity -LinkType Member
     
     foreach ($member in $members) 

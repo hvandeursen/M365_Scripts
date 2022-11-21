@@ -1,11 +1,10 @@
 ﻿Clear-Host
 
-
 $connectEXO = @{
     CertificateFilePath = 'C:\temp\ExoCert.pfx'
-    CertificatePassword = $(ConvertTo-SecureString -String '!nBR@ndev00rt' -AsPlainText -Force)
+    CertificatePassword = $(ConvertTo-SecureString -String 'V00r@ccare!#' -AsPlainText -Force)
     AppID = '394eb93e-137f-4323-b4f8-2c564fceb1d1'
-    Organization = 'baudevoortcompany.onmicrosoft.com'
+    Organization = 'accare.nl'
 }
 Connect-ExchangeOnline @connectEXO
 
