@@ -22,26 +22,23 @@
 # Modules (Import additional modules)
 # =========================================================================================================================
 
-Import-Module -Name AzureAD
-Import-Module -Name MSonline
-Import-Module -Name ExchangeOnlineManagement
-
 # =========================================================================================================================
 # Connections
 # =========================================================================================================================
 
 $connectEXO = @{
     CertificateFilePath = 'C:\temp\ExoCert.pfx'
-    CertificatePassword = $(ConvertTo-SecureString -String '!nBR@ndev00rt' -AsPlainText -Force)
+    CertificatePassword = $(ConvertTo-SecureString -String 'v00rAccar3' -AsPlainText -Force)
     AppID = '394eb93e-137f-4323-b4f8-2c564fceb1d1'
-    Organization = 'baudevoortcompany.onmicrosoft.com'
-}
+    Organization = 'accare.nl'
+    }
 Connect-ExchangeOnline @connectEXO
 
 
-Connect-AzureAD
-Connect-MsolService
-
+$tenantId = "e83fbe90-7c5e-45d0-a497-26ec1b9f8b23"
+$appId = "c431b92f-e073-43e9-9881-8b32c5cf0b6c"
+$thumb = "E4626DAE0F299503347738A490261C429E8EE71C"
+Connect-AzureAD -TenantId $tenantId -ApplicationId  $appId -CertificateThumbprint $thumb
 
 # =========================================================================================================================
 # Init
@@ -65,19 +62,12 @@ $SearchBase = 'OU=Disabled,OU=Users,OU=Accare,DC=accare,DC=nl'
 # FUNCTIONS
 # =========================================================================================================================
 
-
 Function GetDistributionGroupMembers {
     
     param ($group,$CheckUser)
     
     $members = Get-DistributionGroupMember -Identity $group.Identity
-    
-    Write-host `n
-    Write-host "Group = " $group
-    Write-host "Check user = "$CheckUser
-    Write-host "-------------------------------"
-    Write-host `n
-    
+       
     foreach ($member in $members) 
         {
          Write-host "Member DisplayName: "$Member.DisplayName
@@ -96,13 +86,7 @@ Function GetDistributionGroupMembers {
 Function GetOffice365GroupMembers {
     
     param ($group,$CheckUser)
-    <#
-    Write-host `n
-    Write-host "Group = " $group
-    Write-host "Check user = "$CheckUser
-    Write-host "-------------------------------"
-    Write-host `n
-    #>
+    
     $members = Get-UnifiedGroupLinks -Identity $group.Identity -LinkType Member
     
     foreach ($member in $members) 
