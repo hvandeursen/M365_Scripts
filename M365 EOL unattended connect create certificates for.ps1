@@ -68,7 +68,7 @@ $myCert = New-SelfSignedCertificate @newCert
 # Export certificate to .pfx file
 $exportCert = @{
     FilePath = 'ExoCert.pfx'
-    Password = $(ConvertTo-SecureString -String "!nBR@ndev00rt" -AsPlainText -Force)
+    Password = $(ConvertTo-SecureString -String "W@chtW00rd!3" -AsPlainText -Force)
 }
 $myCert | Export-PfxCertificate @exportCert
 
