@@ -11,9 +11,6 @@ $connectEXO = @{
 
 Connect-ExchangeOnline @connectEXO
 
-#Connect-AzAccount @connectEXO
-
-
-#Test
+Get-PSSession
 
 Get-EXOMailbox hans@onzenhans.nl | ft DisplayName
